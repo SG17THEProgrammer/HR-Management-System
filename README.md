@@ -1,180 +1,392 @@
-# HR Management System
+# 🚀 HR Management System (HRMS)
 
-A Human Resource Management System (HRMS) built using **React, MongoDB** with **FastAPI as backend**, allowing an admin to manage employees and track attendance. The application focuses on essential HR operations with a clean, professional UI.
+A clean, modern **Human Resource Management System (HRMS)** built with:
 
----
+* ⚛️ **React** (Frontend)
+* ⚡ **FastAPI** (Backend)
+* 🍃 **MongoDB** (Database)
 
-## 🔹 Features
-
-### Employee Management
-- Add new employees
-- Delete employees
-- View all employees in a table using filter
-- Total present days per employee
-- Mark attendance for an employee with **Present / Absent** status
-
-### Attendance Management
-- Filter attendance by:
-  - Employee ID 
-  - Specific date
-  - Date range (start and end dates)
-- Display attendance records in a table with color-coded status:
-  - Present → Green
-  - Absent → Red
-- Loading spinners & toast notifications for actions
-
-### Dashboard Summary
-- Shows total present days per employee
-- Employee attendance records viewable on row click (Note: On clicking the row user will get the count of absent and present at the bottom of the page)
+This system allows an **Admin** to manage employees and track attendance efficiently with a professional UI and smooth workflow.
 
 ---
 
-## 🔹 Tech Stack
+# 📌 Table of Contents
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | React, Material UI, React Router, Axios, react-hot-toast |
-| Backend | FastAPI, Python 3.11, Pydantic, Motor (async MongoDB client) |
-| Database | MongoDB (NoSQL) |
-| Deployment | Vercel (Frontend), Railway / Render (Backend) |
+1. Project Overview
+2. Features
+3. Tech Stack
+4. Project Structure
+5. Backend APIs
+6. Complete Workflow
+7. Installation Guide (Step-by-Step)
+8. Environment Variables
+9. Deployment
+10. Functional Notes
 
 ---
 
-## 🔹 Folder Structure
+# 📖 1. Project Overview
+
+The HRMS application helps administrators:
+
+* Manage employee records
+* Mark daily attendance
+* Track present/absent counts
+* Filter attendance by employee or date
+* View summary reports
+
+It is designed with simplicity, speed, and clarity in mind.
+
+---
+
+# ✨ 2. Features
+
+## 👨‍💼 Employee Management
+
+* Add new employees
+* Delete employees
+* View all employees in a searchable/filterable table
+* View total present days per employee
+* Navigate directly to attendance marking page
+* Row click shows:
+
+  * Total Present count
+  * Total Absent count
+
+---
+
+## 📅 Attendance Management
+
+* Mark attendance as:
+
+  * ✅ Present (Green)
+  * ❌ Absent (Red)
+* Filter attendance by:
+
+  * Employee ID
+  * Specific Date
+  * Date Range (Start Date – End Date)
+* View attendance in color-coded table
+* Loading spinners for smooth UX
+* Toast notifications for actions
+
+---
+
+## 📊 Dashboard Summary
+
+* Total present days per employee
+* Click employee row → shows attendance stats at bottom
+* Clean Material UI layout
+
+---
+
+# 🛠 3. Tech Stack
+
+| Layer      | Technology                                               |
+| ---------- | -------------------------------------------------------- |
+| Frontend   | React, Material UI, React Router, Axios, react-hot-toast |
+| Backend    | FastAPI, Python 3.11, Pydantic, Motor (Async MongoDB)    |
+| Database   | MongoDB                                                  |
+| Deployment | Netlify (Frontend), Render (Backend)                     |
+
+---
+
+# 📁 4. Project Structure
+
+```
 frontend/
 │
 ├── src/
-│ ├── api.js # Axios instance for API calls
-│ ├── attendanceApi.js
-│ ├── employeeApi.js
-│ ├── components/
-│ │ ├── EmployeeTable.jsx
-│ │ └── AttendanceTable.jsx
-│ │ └── EmployeePresentSummary.jsx 
-│ │ └── Layout.jsx
-│ ├── pages/
-│ │ ├── Dashboard.jsx
-│ │ ├── AddEmployee.jsx
-│ │ ├── MarkAttendance.jsx
-│ │ └── FilterAttendance.jsx
-│ │ └── Employees.jsx
-│ │ └── ViewAttendance.jsx
-│ └── App.jsx
-│ └── main.jsx
+│   ├── api.js
+│   ├── attendanceApi.js
+│   ├── employeeApi.js
+│   ├── components/
+│   │   ├── EmployeeTable.jsx
+│   │   ├── AttendanceTable.jsx
+│   │   ├── EmployeePresentSummary.jsx 
+│   │   └── Layout.jsx
+│   ├── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── AddEmployee.jsx
+│   │   ├── MarkAttendance.jsx
+│   │   ├── FilterAttendance.jsx
+│   │   ├── Employees.jsx
+│   │   └── ViewAttendance.jsx
+│   ├── App.jsx
+│   └── main.jsx
 │
 backend/
 │
-├── main.py # FastAPI entrypoint
-├── db.py # MongoDB connection
+├── main.py
+├── db.py
 ├── models/
-│ ├── employee.py
-│ └── attendance.py
+│   ├── employee.py
+│   └── attendance.py
 ├── schemas/
-│ ├── employee.py
-│ └── attendance.py
+│   ├── employee.py
+│   └── attendance.py
 ├── routes/
-│ ├── employee_routes.py
-│ ├── attendance_routes.py
-│ └── dashboard_routes.py
+│   ├── employee_routes.py
+│   ├── attendance_routes.py
+│   └── dashboard_routes.py
 ├── requirements.txt
 └── .env
+```
 
 ---
 
-## 🔹 Backend APIs
+# 🔌 5. Backend APIs
 
-### Employee
-- `GET /api/employees` → List all employees
-- `POST /api/employees` → Add new employee
-- `DELETE /api/employees/{id}` → Delete employee
-- `GET /api/employees/summary/{employeeId}` → Get total present days
-- `GET /api/employees/getEmpIdHex/{empCode}` → Convert `EMP001` to MongoDB `_id`
+All API documentation is available at (once you run the server):
 
-### Attendance
-- `POST /api/attendance/mark` → Mark attendance
-- `GET /api/attendance/{employee_id}` → Get all attendance for employee
-- `GET /api/attendance/filter` → Filter attendance by:
-  - `employeeId` (hex or simple employee Id)
-  - `date` (YYYY-MM-DD)
-  - `start_date` and `end_date` (YYYY-MM-DD)
-
-
-All api's documentation will be seen here ⬇️
-```http://127.0.0.1:8000/docs```
+```
+http://127.0.0.1:8000/docs
+```
 
 ---
 
-## 🔹 Workflow
+## 👨‍💼 Employee APIs
 
-1. Admin adds employees via **Add Employee** page.
-2. Admin can view all employees in the table:
-   - Click a row → scrolls to bottom
-   - “Mark Attendance” button → navigates to `/mark/:employeeId` with ID pre-filled
-3. Attendance can be marked as **Present / Absent** using toggle buttons.
-4. Attendance can be filtered by:
-   - Employee ID 
-   - Specific date
-   - Date range
-5. Total present days displayed per employee.
-6. Table shows colored chips for attendance status (green/red).
+GET `/api/employees`
+→ List all employees
+
+POST `/api/employees/create`
+→ Add new employee
+
+DELETE `/api/employees/delete/{id}`
+→ Delete employee
+
+GET `/api/employees/summary/{employeeId}`
+→ Get total present days
+
+GET `/api/employees/getEmpIdHex/{empCode}`
+→ Convert employee Id to MongoDB _id
 
 ---
 
-## 🔹 Installation & Running Locally
+## 📅 Attendance APIs
 
-### Backend
+POST `/api/attendance/mark`
+→ Mark attendance
 
-1. **Clone the repo** and navigate to backend:
+GET `/api/attendance/{employee_id}`
+→ Get all attendance for employee
 
-```bash
+GET `/api/attendance/filter`
+→ Filter attendance by:
+
+* employeeId (hex or simple ID)
+* date (YYYY-MM-DD)
+* start_date (YYYY-MM-DD)
+* end_date (YYYY-MM-DD)
+
+---
+
+## 📊 Dashboard API
+GET `/api/dashboard`
+→ Get total employees, total present counts and total absent records
+
+---
+
+# 🔄 6. Complete Workflow
+
+1. Admin adds employee from **Add Employee** page.
+2. Admin views employee list.
+3. Click employee row:
+
+   * Scrolls to bottom
+   * Shows total Present & Absent count
+4. Click "Mark Attendance":
+
+   * Navigates to `/mark/:employeeId`
+   * Employee ID auto-filled
+5. Select Present or Absent.
+6. Save → Toast notification appears.
+7. Admin can filter attendance anytime by going to Filter Attendance Page.
+8. Dashboard updates automatically.
+
+---
+
+# 💻 7. Installation Guide (Run Locally)
+
+---
+
+## 🔹 Backend Setup
+
+### Step 1: Navigate to backend folder
+
+```
 cd backend
-Create virtual environment & activate:
+```
 
+### Step 2: Create Virtual Environment
+
+Windows:
+
+```
 python -m venv venv
-# Windows
 venv\Scripts\activate
-# Mac/Linux
+```
+
+Mac/Linux:
+
+```
+python -m venv venv
 source venv/bin/activate
+```
 
+### Step 3: Install Dependencies
 
-Install dependencies:
-
+```
 pip install -r requirements.txt
+```
 
+### Step 4: Create `.env` File
 
-Create .env file:
+Create a `.env` file inside `backend/` and add:
 
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/hrms_lite?retryWrites=true&w=majority
+```
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<cluster_name>
+FRONTEND_URL = http://localhost:3000
+```
 
+Replace:
 
-Run FastAPI server:
+* `<username>` with your MongoDB username
+* `<password>` with your MongoDB password
+* `<cluster_name>` with your MongoDB Cluster Name
 
+---
+
+### Step 5: Run FastAPI Server
+
+```
 uvicorn main:app --reload
+```
 
+Backend will run at:
 
-Backend will run at http://127.0.0.1:8000
+```
+http://127.0.0.1:8000
+```
 
-API docs available at http://127.0.0.1:8000/docs
+Swagger Docs (API Documentation):
 
-Frontend
+```
+http://127.0.0.1:8000/docs
+```
 
-Navigate to frontend:
+---
 
+## 🔹 Frontend Setup
+
+### Step 1: Navigate to frontend
+
+```
 cd frontend
+```
 
+### Step 2: Install Dependencies
 
-Install dependencies:
-
+```
 npm install
+```
 
+### Step 3: Create `.env` File
 
-Create .env:
+Inside `frontend/`, create:
 
-REACT_APP_API_URL=http://127.0.0.1:8000/api
+```
+BACKEND_URL=http://127.0.0.1:8000/api
+```
 
+---
 
-Run React app:
+### Step 4: Run React App
 
-npm start
+```
+npm run dev
+```
 
+Frontend will run at:
 
+```
+http://localhost:3000
+```
+
+---
+
+# 🌍 8. Environment Variables Summary
+
+## Backend (.env)
+
+```
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<cluster_name>
+FRONTEND_URL = http://localhost:3000
+```
+
+## Frontend (.env)
+
+```
+BACKEND_URL=http://127.0.0.1:8000/api
+```
+
+---
+
+# 🚀 9. Deployment
+
+## Frontend Deployment
+
+* Deploy on **Netlify**
+* Add environment variable (in code itself):
+
+  * BACKEND_URL=http://127.0.0.1:8000/api
+
+## Backend Deployment
+
+* Deploy on **Render**
+* Add environment variable:
+
+  * MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<cluster_name>
+  * FRONTEND_URL = http://localhost:3000
+
+---
+
+# 🎯 10. Functional Notes
+
+* Attendance status is color-coded:
+
+  * Present → Green chip
+  * Absent → Red chip
+* Employee row click:
+
+  * Displays Present & Absent count at bottom
+* Mark Attendance page:
+
+  * Employee ID auto-filled via route param
+* Filters support:
+
+  * Single date
+  * Date range
+  * Employee ID
+* All operations show:
+
+  * Loading spinners
+  * Toast notifications
+
+---
+
+# 🧠 Best Practices Implemented
+
+* Async MongoDB with Motor
+* Clean API separation (Routes / Models / Schemas)
+* Modular frontend API layer
+* Environment variable configuration
+* RESTful endpoint structure
+* Professional UI with Material UI
+
+---
+
+# 👨‍💻 Author
+
+Built by Shray with ❤️ using React + FastAPI + MongoDB
