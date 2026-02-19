@@ -45,13 +45,28 @@ async def delete_employee(employee_id: str):
 @router.get("/summary/{employee_id}")
 async def total_present_days(employee_id: str):
 
-    count = await db.attendances.count_documents({
+    presentCount = await db.attendances.count_documents({
         "employeeId": employee_id,
         "status": "present"
     })
 
+    absentCount = await db.attendances.count_documents({
+        "employeeId": employee_id,
+        "status": "absent"
+    })
+
     return {
         "employeeId": employee_id,
-        "totalPresentDays": count , 
-        "detail": "Total present days calculated successfully"
+        "totalPresentDays": presentCount , 
+        "totalAbsentDays": absentCount,
+        "detail": "Total present and absent days calculated successfully"
     }
+
+
+@router.get("/getEmpIdHex/{empCode}")
+async def get_emp_id_hex(empCode: str):
+    employee = await db.employees.find_one({"employeeId": empCode})
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    
+    return {"employeeIdHex": str(employee["_id"])}

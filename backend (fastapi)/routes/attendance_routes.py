@@ -41,7 +41,6 @@ async def filter_attendance(
     start_date: Optional[date] = None,
     end_date: Optional[date] = None,
 ):
-    print("Filter endpoint accessed")  # Debugging line
     print("Received:", employeeId, date, start_date, end_date)
     query = {}
 
@@ -57,7 +56,6 @@ async def filter_attendance(
             "$lte": str(end_date)
         }
     
-    print("Filter Query:", query)  # Debugging line
 
     records = []
     cursor = db.attendances.find(query)
