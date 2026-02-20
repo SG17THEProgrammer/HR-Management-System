@@ -27,7 +27,7 @@ export default function EmployeeTable({ employees, onDelete, onRowClick }) {
             startIcon={<HowToRegIcon />}
             onClick={(e) => {
               e.stopPropagation(); // prevent row click
-              navigate(`/mark/${params.row._id}`);
+              navigate(`/mark/${params.row.employeeId}`);
             }}
           >
             Mark Attendance

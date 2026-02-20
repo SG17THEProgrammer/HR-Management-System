@@ -11,14 +11,20 @@ router = APIRouter()
 
 @router.post("/mark")
 async def mark_attendance(data: AttendanceCreate):
-    # print(data)
-    employee = await db.employees.find_one({"_id": ObjectId(data.employeeId)})
-    # print(employee)
+    # print("data" , data)
+    if not data.employeeId:
+        raise HTTPException(status_code=400, detail="Employee ID is required")
+    # employee = await db.employees.find_one({"_id": ObjectId(data.employeeId)})
+    employee = db.employees.find_one({"employeeId": data.employeeId})
+    # print("employee",employee)
     if not employee:
         raise HTTPException(status_code=404, detail="Employee not found")
+    
+    employee = await db.employees.find_one({"employeeId": data.employeeId})
+    hexEmpId = str(employee["_id"])
 
     existing = await db.attendances.find_one({
-        "employeeId": data.employeeId,
+        "employeeId": hexEmpId,
         "date": data.date.isoformat()
     })
 
@@ -26,7 +32,7 @@ async def mark_attendance(data: AttendanceCreate):
         raise HTTPException(status_code=400, detail="Attendance already marked")
 
     await db.attendances.insert_one({
-        "employeeId": data.employeeId,
+        "employeeId": hexEmpId,
         "date": data.date.isoformat(),
         "status": data.status,
         "createdAt": datetime.utcnow()
@@ -41,7 +47,7 @@ async def filter_attendance(
     start_date: Optional[date] = None,
     end_date: Optional[date] = None,
 ):
-    print("Received:", employeeId, date, start_date, end_date)
+    # print("Received:", employeeId, date, start_date, end_date)
     query = {}
 
     if employeeId:
@@ -61,7 +67,12 @@ async def filter_attendance(
     cursor = db.attendances.find(query)
 
     async for document in cursor:
+        # print("Raw record:", document)
+        # print(document["_id"])
+        employee = await db.employees.find_one({"_id": ObjectId(document["employeeId"])})
+        document["empId"] = employee["employeeId"] if employee else "Unknown" 
         document["_id"] = str(document["_id"])
+        # document["employee"] = employee
         records.append(document)
 
     return {"records": records, "detail": "Attendance records filtered successfully"}

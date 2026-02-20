@@ -35,7 +35,7 @@ export default function FilterAttendance() {
           );
           empIdHex = hexRes.data.employeeIdHex;
         } catch (err) {
-          toast.error("Invalid Employee Code (must be EMPXXX)");
+          toast.error("Employee Id not found");
           setLoading(false);
           return;
         }
@@ -68,7 +68,7 @@ export default function FilterAttendance() {
     });
     setRecords([]);
   };
-
+// console.log(records);
   return (
     <Paper sx={{ p: 4 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
@@ -80,9 +80,9 @@ export default function FilterAttendance() {
         <Grid item xs={12} md={6}>
           <TextField
             fullWidth
-            label="Employee Code"
+            label="Employee Id"
             value={filters.employeeId}
-            helperText="Enter EMP001 style code (optional)"
+            // helperText="Enter Employee Id"
             onChange={(e) =>
               setFilters({ ...filters, employeeId: e.target.value })
             }

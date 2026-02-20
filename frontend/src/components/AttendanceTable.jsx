@@ -4,7 +4,7 @@ import { Paper, Chip } from "@mui/material";
 export default function AttendanceTable({ records }) {
 
   const columns = [
-    { field: "employeeId", headerName: "Employee ID", flex: 1 },
+    { field: "empId", headerName: "Employee ID", flex: 1 },
 
     { field: "date", headerName: "Date", flex: 1 },
 

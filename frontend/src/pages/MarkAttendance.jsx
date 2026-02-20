@@ -40,7 +40,6 @@ export default function MarkAttendance() {
         } catch (err) {
             if (err.response?.data?.detail) {
                 const errors = err.response.data.detail;
-
                 if (Array.isArray(errors)) {
                     const firstError = errors[0];
                     toast.error(firstError.msg);
